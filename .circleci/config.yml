@@ -6,6 +6,14 @@ orbs:
   welcome: circleci/welcome-orb@0.4.1
 #jobs
 jobs:
+  build:
+    docker:
+      - image: cimg/base:2020.01
+    steps:
+      - run:
+          name: "echo an env var that is part of our project"
+          command: |
+            echo $Name
   print_hello:
     docker:
         # Pick a base image which matches the version of Node you need for
