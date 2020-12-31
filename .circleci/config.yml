@@ -4,6 +4,34 @@ version: 2.1
 orbs:
   # Declare a dependency on the welcome-orb
   welcome: circleci/welcome-orb@0.4.1
+#jobs
+jobs:
+  print_hello:
+    docker:
+        # Pick a base image which matches the version of Node you need for
+        # building from https://hub.docker.com/r/circleci/node/tags/
+        #
+        # Note: If using a different container, make sure it contains at least
+        # git 2.6.0. (Use -stretch for circleci/node containers.)
+        - image: circleci/node:13.8.0
+    steps:
+      - run:
+         name: print hello
+         command: |
+            echo "hello" 
+  print_world:
+    docker:
+      # Pick a base image which matches the version of Node you need for
+      # building from https://hub.docker.com/r/circleci/node/tags/
+      #
+      # Note: If using a different container, make sure it contains at least
+      # git 2.6.0. (Use -stretch for circleci/node containers.)
+      - image: circleci/node:13.8.0
+    steps:
+      - run:
+         name: print world
+         command: |
+            echo "world" 
 # Orchestrate or schedule a set of jobs
 workflows:
   # Name the workflow "welcome"
@@ -11,3 +39,8 @@ workflows:
     # Run the welcome/run job in its own container
     jobs:
       - welcome/run
+      - print_hello
+      - print_world:
+        requires:
+          - print_hello
+    
